@@ -13,9 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('vue');
 });
+
+Route::get('article/{n}', function($n) {
+    return view('article')->withNumero($n);
+})->where('n', '[0-9]+');
+
+
+Route::get('facture/{n}', function($n) {
+    return view('facture')->withNumero($n);
+})->where('n', '[0-9]+');
 
 // Route::get('/', function() {
 //     return 'Je suis la page d\'accueil !';
