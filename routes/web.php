@@ -26,3 +26,7 @@ Route::get('{i?}', function($i=0) { return 'Je suis la page ' . $i . '!'; })->wh
 Route::get('contact', function() {
     return "Moi c'est le contact.";
 });
+
+Route::get('test', function () {
+    return response('un test', 206)->header('Content-Type', 'text/plain');
+});
