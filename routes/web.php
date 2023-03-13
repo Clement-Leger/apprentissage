@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +19,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-    return view('vue');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
-Route::get('article/{n}', function($n) {
-    return view('article')->withNumero($n);
-})->where('n', '[0-9]+');
+Route::get('article/{n}', [ArticleController::class, 'show'])->where('n', '[0-9]+');
 
 
 Route::get('facture/{n}', function($n) {
