@@ -31,6 +31,14 @@ Route::post('users', [UsersController::class, 'store']);
 Route::get('contact', [ContactController::class, 'create']);
 Route::post('contact', [ContactController::class, 'store']);
 
+Route::get('/test-contact', function () {
+    return new App\Mail\Contact([
+      'nom' => 'Sam',
+      'email' => 'SamLePianiste@example.com',
+      'message' => 'Je suis Sam le pianiste !'
+      ]);
+});
+
 Route::get('facture/{n}', function($n) {
     return view('facture')->withNumero($n);
 })->where('n', '[0-9]+');
