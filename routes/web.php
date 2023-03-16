@@ -4,6 +4,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,9 @@ Route::get('/test-contact', function () {
 
 Route::get('photo', [PhotoController::class, 'create']);
 Route::post('photo', [PhotoController::class, 'store']);
+
+Route::get('contacts', [ContactsController::class, 'create'])->name('contact.create');
+Route::post('contacts', [ContactsController::class, 'store'])->name('contact.store');
 
 Route::get('facture/{n}', function($n) {
     return view('facture')->withNumero($n);
