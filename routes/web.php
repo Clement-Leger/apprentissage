@@ -6,6 +6,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\FilmController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,13 @@ Route::post('photo', [PhotoController::class, 'store']);
 
 Route::get('contacts', [ContactsController::class, 'create'])->name('contact.create');
 Route::post('contacts', [ContactsController::class, 'store'])->name('contact.store');
+
+Route::resource('films', FilmController::class);
+
+Route::controller(FilmController::class)->group(function () {
+    Route::delete('films/force/{film}', 'forceDestroy')->name('films.force.destroy');
+    Route::put('films/restore/{film}', 'restore')->name('films.restore');
+});
 
 Route::get('facture/{n}', function($n) {
     return view('facture')->withNumero($n);
