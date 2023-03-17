@@ -7,7 +7,7 @@
             align-items: center;
             padding: 0.4em;
         }
-        .is-info {
+        select, .is-info {
             margin: 0.3em;
         }
     </style>
@@ -22,9 +22,16 @@
     <div class="card">
         <header class="card-header">
             <p class="card-header-title">Films</p>
+            <div class="select">
+                <select onchange="window.location.href = this.value">
+                    <option value="{{ route('films.index') }}" @unless($slug) selected @endunless>Toutes catégories</option>
+                    @foreach($categories as $category)
+                        <option value="{{ route('films.category', $category->slug) }}" {{ $slug == $category->slug ? 'selected' : '' }}>{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <a class="button is-info" href="{{ route('films.create') }}">Créer un film</a>
-        </header>
-        <div class="card-content">
+        </header>        <div class="card-content">
             <div class="content">
                 <table class="table is-hoverable">
                     <thead>
