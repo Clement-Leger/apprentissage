@@ -9,15 +9,28 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    // public function up(): void
+    // {
+    //     Schema::disableForeignKeyConstraints();
+    //     Schema::create('films', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->foreignId('category_id')
+    //         ->constrained()
+    //         ->onUpdate('restrict')
+    //         ->onDelete('restrict');            
+    //         $table->string('title');
+    //         $table->year('year');
+    //         $table->text('description');
+    //         $table->timestamps();
+    //         $table->softDeletes();
+    //     });
+    // }
+
     public function up(): void
     {
         Schema::disableForeignKeyConstraints();
         Schema::create('films', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')
-            ->constrained()
-            ->onUpdate('restrict')
-            ->onDelete('restrict');            
             $table->string('title');
             $table->year('year');
             $table->text('description');

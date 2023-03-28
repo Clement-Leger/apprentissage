@@ -44,8 +44,8 @@ class FilmController extends Controller
      */
     public function show(Film $film): View
     {
-        $category = $film->category->name;    
-        return view('show', compact('film', 'category'));
+        // $film->with('categories')->get();    
+        return view('show', compact('film'));
     }
 
     /**
