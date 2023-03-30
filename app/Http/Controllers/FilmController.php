@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FilmRequest;
-use App\Models\{Film, Category};
+use App\Models\{Film, Category, Actor};
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -16,9 +17,18 @@ class FilmController extends Controller
      */
     public function index($slug = null): View
     {
-            $query = $slug ? Category::whereSlug($slug)->firstOrFail()->films() : Film::query();
-            $films = $query->withTrashed()->oldest('title')->paginate(5);
-            return view('index', compact('films', 'slug'));
+        $model = null;
+
+        if($slug){
+            if(Route::currentRouteName() == 'films.category') {
+                $model = new Category;
+            } else {
+                $model = new Actor;
+            }
+        }
+        $query = $model ? $model->whereSlug($slug)->firstOrFail()->films() : Film::query();
+        $films = $query->withTrashed()->oldest('title')->paginate(5);
+        return view('index', compact('films', 'slug'));
     }
 
     /**
@@ -36,6 +46,7 @@ class FilmController extends Controller
     {
         $film = Film::create($request->all());
         $film->categories()->attach($request->cats);
+        $film->actors()->attach($request->acts);
 
         return redirect()->route('films.index')->with('info', 'Le film a bien été créé.');
     }
@@ -64,6 +75,7 @@ class FilmController extends Controller
     {
         $film->update($filmRequest->all());
         $film->categories()->sync($filmRequest->cats);
+        $film->actors()->sync($filmRequest->acts);
         return redirect()->route('films.index')->with('info', 'Le film a bien été modifié');
     }
 

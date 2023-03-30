@@ -22,11 +22,11 @@ class Film extends Model
 
     public function categories(): MorphToMany
     {
-        return $this->MorphByMany(Category::class, 'filmable');
+        return $this->morphedByMany(Category::class, 'filmable');
     }
 
     public function actors(): MorphToMany
     {
-        return $this->MorphByMany(Actor::class, 'filmable');
+        return $this->morphedByMany(Actor::class, 'filmable');
     }
 }

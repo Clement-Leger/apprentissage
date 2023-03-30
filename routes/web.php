@@ -54,6 +54,7 @@ Route::controller(FilmController::class)->group(function () {
     Route::delete('films/force/{id}', 'forceDestroy')->name('films.force.destroy');
     Route::put('films/restore/{id}', 'restore')->name('films.restore');
     Route::get('category/{slug}/films', 'index')->name('films.category');
+    Route::get('actor/{slug}/films', 'index')->name('films.actor');
 });
 
 Route::get('facture/{n}', function($n) {

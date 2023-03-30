@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('film', function ($value){
-            return Film::with('categories')->find($value) ?? abort(404);
+            return Film::with('categories', 'actors')->find($value) ?? abort(404);
         });
     }
 
