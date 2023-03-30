@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\UsersController;
@@ -7,7 +9,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\FilmController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,11 +21,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get('/', [WelcomeController::class, 'index'])->name('home');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+//* ----------------------------- *//
+
+// Route::get('/', [WelcomeController::class, 'index'])->name('index');
 
 Route::get('article/{n}', [ArticleController::class, 'show'])->where('n', '[0-9]+');
 
@@ -48,7 +63,7 @@ Route::post('photo', [PhotoController::class, 'store']);
 Route::get('contacts', [ContactsController::class, 'create'])->name('contact.create');
 Route::post('contacts', [ContactsController::class, 'store'])->name('contact.store');
 
-Route::resource('films', FilmController::class);
+Route::resource('films', FilmController::class)->middleware('guest');
 
 Route::controller(FilmController::class)->group(function () {
     Route::delete('films/force/{id}', 'forceDestroy')->name('films.force.destroy');
