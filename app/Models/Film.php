@@ -13,6 +13,7 @@ class Film extends Model
 {
     use HasFactory, SoftDeletes;
     
+    protected $hidden = ['id', 'created_at', 'updated_at', 'deleted_at'];
     protected $fillable = ['title', 'year', 'description'];
 
     // public function category(): BelongsTo
